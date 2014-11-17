@@ -22,32 +22,6 @@ rankall <- function(outcome, num = "best") {
     care_data <- read.csv("outcome-of-care-measures.csv", colClasses = "character")
     suppressWarnings({care_data[, outcome_index] <- as.numeric(care_data[, outcome_index])})
     
-    'hospitals <- lapply(valid_states, function(state) { 
-                            sel <- care_data["State"] == state
-                            name <- care_data["Hospital.Name"][sel]
-                            val <- care_data[outcome_index][sel]
-                            
-                            h1 <- data.frame(val, name)
-                            h2 <- h1[ complete.cases(h1), ]
-                            index <- with(h2, order(val, name))
-                            h3 <- h2[index,]
-                            
-                            rank <- num
-                            if (num == "best") {
-                                rank <- 1
-                            }
-                            else if ( num == "worst" ) {
-                                rank <- nrow(h3)
-                            }
-                            else if ( num < 1 || num > nrow(h3) )
-                            {
-                                return(NA);
-                            }
-                            as.character(h3[rank,2])
-                    })
-    
-    data.frame(hospital=hospitals, state=valid_states, row.names=valid_states)'
-    
     r <- data.frame(hospital=NA, state=valid_states, row.names=valid_states)
     
     for (state in valid_states) {

@@ -35,17 +35,13 @@ rankall <- function(outcome, num = "best") {
         h3 <- h2[index,]
         
         rank <- num
-        if (num == "best") {
-            rank <- 1
+        if (num == "best") { rank <- 1; }
+        else if ( num == "worst" ) { rank <- nrow(h3); }
+        else if ( num < 1 || num > nrow(h3) ) {
+            r[state, "hospital"] = NA
         }
-        else if ( num == "worst" ) {
-            rank <- nrow(h3)
-        }
-        else if ( num < 1 || num > nrow(h3) )
-        {
-            return(NA);
-        }
-        r[state, "hospital"] = as.character(h3[rank,2])
+        
+        r[state, "hospital"] = as.character(h3[rank,2])            
     }    
     r
 }

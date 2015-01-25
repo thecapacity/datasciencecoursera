@@ -94,8 +94,6 @@ abline(v=theoretical_mean, col="red")
 
 In our simulation, the sample differs from the theoretical value by ```r var(apply(results, 1, mean)) - 1/lambda```. This similarity was largly expected, given the values used in the simulations that help converge to the expected values.
 
-### Distribution
-
 A graph of the sample results, relative to the theorical variance is shown in the figure below:
 ```{r}
 hist(apply(results,1,var), xlab="variance values", prob=TRUE)
@@ -105,7 +103,7 @@ abline(v=theoretical_var, col="red")
 *The distribution of variance for ```r iterations``` iterations of ```r n``` exponential random variables with lambda = ```r lambda```.*  
     *The red vertical line indicates the theoretical variance.*
 
-##### Distribution
+### Distribution
 
 Here we show that the distribution is approximately normal: 
 

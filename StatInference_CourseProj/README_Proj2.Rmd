@@ -1,0 +1,69 @@
+---
+title: "ToothGrowth Exploratory Analysis"
+author: "thecapacity"
+date: "January 24, 2015"
+output: html_document
+---
+
+## Overview
+
+This is the project file for my Peer Assignment of the Statistical Inference class.
+
+I will seek to analyze the ToothGrowth data in the R datasets package, by:
+
+1. Loading the ToothGrowth data
+
+2. Performing some basic exploratory data analyses
+
+3. Providing a basic summary of the data.
+
+4. Using confidence intervals and/or hypothesis tests to compare tooth growth by ```supp``` and ```dose```. *Note I will only use techniques from class*
+
+5. Stating my conclusions and the assumptions needed for those conclusions.
+
+I will create a report to answer the questions. Given the nature of the series, ideally knitr will be used to create the reports and convert to a pdf. The pdf report will be **no more than 6 pages total including supporting material** if needed (code, figures, etcetera).
+
+This will also be published at: http://rpubs.com/thecapacity/StatInf_Proj2
+
+## Approach
+
+I will plan to ensure I cover the following activities:
+
+* Perform an exploratory data analysis with at least a single plot or table highlighting basic features of the data?
+
+* Perform some relevant confidence intervals and/or tests?
+
+* Review the results of the tests and/or intervals and interpret them in the context of the problem?
+
+* Describe the assumptions needed for conclusions?
+
+### Load Data
+Here we focus on loading the ToothGrowth data from the R datasets package, and provide some initial information on the data size and structure.
+
+```{r}
+# Load the Data
+
+```
+
+### Analysis
+
+Using confidence intervals and/or hypothesis tests to compare tooth growth by ```supp``` and ```dose```. I will perform some basic exploratory data analyses that will be collected and visualized, to be summarized in the next section.
+
+This will include:
+
+* At least a single plot or table highlighting basic features of the data
+
+* A relevant confidence intervals and/or other potential tests
+
+**Note I will only use techniques from class.**
+
+```{r}
+# Begin Basic Exploratory Analysis
+```
+
+### Summary
+The following section provides a basic summary of the data, including the tests and/or intervals used, along with contextual interpretation.
+
+### Conclusions
+
+The following discussion focused on restating my conclusions and the assumptions needed for those conclusions and further describing assumptions underlying the analysis and summary.

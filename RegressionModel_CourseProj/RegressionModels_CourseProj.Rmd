@@ -5,19 +5,17 @@ date: "February 22, 2015"
 output: html_document
 ---
 
-## Summary
+### Summary
 
-1974 data from Motor Trend, a magazine about the automobile industry, was used to explore the relationship between a set of variables and the outcome they might have on miles per gallon (`mpg`). Of particular focus was whether an automatic or manual transmission resulted in better MPG, and quantifying how different that impact may be. 
-
-Using a linear regression model, based on the `mtcars` dataset provided by R, we found that a car with manual transmission yields more miles per gallon than a car with automatic transmission (`27.362` vs. `24.802`), given that most other variables are excluded from our model. It was also discovered that the number of cylinders (`cyl`) plays an importat role as well, but the layout of the engine (straight vs. V) represented by the `vs` variable is not as significant as initially assessed in our second model.
+Using a linear regression model, based on the `mtcars` dataset provided by R, we found that a car with manual transmission yields more miles per gallon than a car with automatic transmission (`27.362` vs. `24.802`) based on our model. It was also discovered that the number of cylinders (`cyl`) plays an importat role as well, but the layout of the engine represented by the `vs` variable is not as significant as initially assessed in a second model.
 
 We have only superficially explored the relationship across other vaiables, based on the assumption that a number of 'power-type' indicators are strongly correlated with `cyl` count. Potential areas for further exploratory data analysis would include quantifying the correlation across variables, such as whether a measure like `hp` is a better predictor thatn `cyl` or `disp`.
 
-## Analysis
+### Analysis
 
-In ths assignment I will pretend to work for a magazine about the automobile industry. Looking at a data set of a collection of cars, they are interested in exploring the relationship between a set of variables and miles per gallon (MPG) (outcome).
+Looking at a data set of a collection of cars, I am interested in exploring the relationship between a set of variables and miles per gallon (MPG) (outcome).
 
-They are particularly interested in the following two questions:
+We are particularly interested in the following two questions:
 
 * *Is an automatic or manual transmission better for MPG*
 
@@ -25,13 +23,11 @@ They are particularly interested in the following two questions:
 
 #### Approach
 
-This analysis will consider the tnterpretation of the model coefficients including a review and plot of Residuals. Some alternative models for fit will be explored including discussion of the selection strategy. Conclusions and potential uncertainty and confounders are included throughout as well as potential areas for future exploratory data analysis
+This analysis will consider the interpretation of the model coefficients including a review and plot of Residuals. Some alternative models for fit will be explored including discussion of the selection strategy. Conclusions and potential uncertainty and confounders are included throughout as well as potential areas for future exploratory data analysis
 
-Based on my *'expertise'* in cars, I believe that the most significant factor to consider, in addition to the transmission type, may be the number of cylinders `cyl`, which is expected to be covariant with other measures of engine power (e.g. `disp`, `hp`, `carb`, etc). We will first begin the analysis with the most simplistic relationship (`mpg` by `am`) and then investigate the impact of other variables.
+Based on my *'expertise'* in cars, I believe that the most significant factor to consider, in addition to the transmission type, may be the number of cylinders `cyl`. We will first begin the analysis with the most simplistic relationship and then investigate the impact of other variables.
 
-#### Processing
-
-Pre-processing is minimal, serving only to load useful defaults and convert key variables to factors to expedite analysis, but not shown to reduce overall page count.
+*Pre-processing is minimal, serving to load useful defaults and convert key variables to factors, but not shown to reduce overall page count.*
 ```{r, echo=FALSE}
 # Ensure pristine working environment
 rm(list=ls())
@@ -46,50 +42,44 @@ mtcars$cyl = as.factor(mtcars$cyl)
 mtcars$vs = as.factor(mtcars$vs)
 ```
 
-Our most parsimonious model will simply be to model the relationship between `mpg` and `am`, where the transmission status is `0` for automatic and `1` for manual.
-
-Therefore the model and summary for this fit is as follows:
+Our most parsimonious model will be to model the relationship between `mpg` and `am`:
 ```{r}
 fit1 <- lm(mpg ~ am, mtcars)
-fit1$coef
 ```
 
-The model shows that the transmission factor is significant (with a `t value` of ```r summary(fit1)$coef[6]```) in predicting `mpg`, by ```r summary(fit1)$coef[2]``` mpg. The residuals also have what looks to be a relatively balanced magnitude (```r summary(summary(fit1)$residuals)[1]``` - ```r summary(summary(fit1)$residuals)[6]```), but we will save more thorough review of the residuals once we feel more confidant in the completed model. Based on this initial analysis, we feel it would be useful to compare this directed approach to a more generic 'kitchen sink' approach, i.e. modeling the impact on `mpg` as a function of all variables in the dataset.
+The model shows that the transmission factor is significant (with a `t value` of ```r summary(fit1)$coef[6]```) in predicting `mpg`, by ```r summary(fit1)$coef[2]``` mpg. The residuals also have what looks to be a relatively balanced magnitude (```r summary(summary(fit1)$residuals)[1]``` - ```r summary(summary(fit1)$residuals)[6]```), but we will save more thorough review of the residuals once we feel more confidant in the completed model. 
 
-For this approach we built a second model can operate as follows:
+Based on this initial analysis, we feel it would be useful to compare this directed approach to a generic 'kitchen sink' approach, modeling the `mpg` impact as a function of all variables via the following model:
 ```{r}
 fit2 <- lm(mpg ~ ., mtcars)
 summary(fit2)$coef
 ```
 
-Here we see that `wt` and `cyl` also have a measurable (`> 1`) ) estimated effect on `mpg` as well as `vs`, which is believed to be an indication of [whether the car has a V- or Straight- engine](http://stackoverflow.com/questions/18617174/r-mtcars-dataset-meaning-of-vs-variable). Other variables, such as `gear`, are excluded based on this 'cut-off' from further analysis but seem as though they may have value in future modeling and analysis.
+Here we see that `wt` and `cyl` have a measurable (>1) estimated effect on `mpg`, and `vs` - [an indication of the car's engine shape](http://stackoverflow.com/questions/18617174/r-mtcars-dataset-meaning-of-vs-variable). Based on this 'cut-off', other variables like `gear` are excluded from further analysis but may be valubel in future work.
 
-**What seems most interesting from this dataset, aside from possibly identifying a number of 'less significant' variables, is that the estimate for the impact of the number of cylinders seems to be reversed (by sign) from the expected result**, i.e. `cyl6` shows a negative (`-1.66`) impact on mpg where as `cyl8` shows a positive `1.64` relationship - something that seems counter to intuition. Based on experience, one would assume that smaller-cylinder engines would be more fuel efficient. **We believe this 'questionable outcome' is an important part of exploration, and ultimately an indicator that this particular model does not represent the 'best fit'**.
+**What is interesting, is the impact by number of cylinders seems to be reversed (by sign) from the expected result**, i.e. `cyl6` shows a negative impact where as `cyl8` shows a positive relationship. This iseems counter to intuition, but **we believe this 'questionable outcome' is an important exploration, and ultimate indicator that this model does not represent q 'best fit'**.
 
-So let's look at the coefficients for a third model, highlighting the fit from these key variables:
-```{r}
-fit3 <- lm(mpg ~ am + cyl + vs, mtcars)
-summary(fit3)$coef
+A third model was used to review these selected coefficients, but is not echoed here to reduce page space.
+```{r, echo=FALSE}
+fit3 <- lm(mpg ~ am + cyl + vs, mtcars) #summary(fit3)$coef
 ```
 
-From the coefficients table we see that `am` and `cyl` are all deemed significant, but the V/S status is not to the same degree. **We can also see support for what seems to be a more intuitive relationship between `mpg` and `cyl`, specifically that mpg decreases as the number of cylinders increase**, as opposed to the earlier sign issues.
+From the coefficients table of that model ```fit3```, we saw that `am` and `cyl` were deemed significant, but the V/S status was not to the same degree. **We also saw support for a more intuitive relationship between `mpg` and `cyl`, specifically that mpg decreases as the number of cylinders increase**.
 
 Therefore our final model is simplified in final form to:
 ```{r}
 fit4_final <- lm(mpg ~ am + cyl, mtcars)
-summary(fit4_final)
+fit4_final$coef
 ```
 
-From this model we can clearly see the relationships most people more than casually familiar with automotives would expect; namely that MPG goes up for manual cars, i.e. `am == 1` and down as the number of cylinders increase. (Please see Appendix for supporting charts). With a residual variance of ```r summary(fit4_final)$sigma``` this model seems to best balance simplicity, for building an understanding, with usefulness, for future predicions of mpg.
+From this model we see the relationships people familiar with automotives would expect; namely that MPG goes up for manual cars, i.e. `am == 1` and down as the number of cylinders increase. With a residual variance of ```r summary(fit4_final)$sigma``` this model seems to best balance simplicity, for building an understanding, with usefulness, for future predicions of mpg.
 
-Note: I find it useful to plot the model's values *without an intercept* to facilitate reporting on the final model, and this is included below, but not echoed, for completeness.
+**Note:** I find it useful to plot the model's values *without an intercept* to facilitate reporting on the final model, and this is included below, but not echoed, for completeness. Also the `echo = FALSE` parameter has also been added to the code chunks in the appendix to prevent printing of the R code that generated the plot to reduce extraneous text and meet the assignment's demands.
 ```{r, echo=FALSE}
-summary( lm( mpg ~ am + cyl - 1, mtcars) )
+#summary( lm( mpg ~ am + cyl - 1, mtcars) )
 ```
 
-*Note that the `echo = FALSE` parameter has also been added to the code chunks in the appendix to prevent printing of the R code that generated the plot to reduce extraneous text and meet the assignment's demands.*
-
-## Appendix
+### Appendix
 
 #### Best Fit Plot
 ```{r, echo=FALSE}
@@ -100,13 +90,13 @@ plot(fit4_final)
 #### Residuals vs. X's in Final Model
 ```{r, echo=FALSE}
 par(mfrow= c(1,2))
-plot(mtcars$am, resid(fit4_final), main="Residuals by Transmission Status")
+plot(mtcars$am, resid(fit4_final), main="Residuals by Transmission")
 plot(mtcars$cyl, resid(fit4_final), main="Residuals by # of Cylinders")
 ```
 
 #### Plot of `mpg` vs our final key factors, `am` and `cyl`.
 ```{r, echo=FALSE}
 par(mfrow= c(1,2))
-plot(mtcars$am, mtcars$mpg, main="MPG by Transmission Status")
+plot(mtcars$am, mtcars$mpg, main="MPG by Transmission")
 plot(mtcars$cyl, mtcars$mpg, main="MPG by # of Cylinders")
 ```

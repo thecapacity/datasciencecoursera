@@ -17,7 +17,13 @@ shinyUI(pageWithSidebar(
         dateInput("date", "Date:")
         ),
     mainPanel(
-            
+        h3("Illustrating outputs"),
+        h4("You Entered"),
+        verbatimTextOutput("oid1"),
+        h4("You entered"),
+        verbatimTextOutput("oid2"),
+        h4("You N-tered"),
+        verbatimTextOutput("odate")
     )
 ))
 

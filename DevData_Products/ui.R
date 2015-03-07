@@ -2,21 +2,22 @@
 #Doesn't end when I close the opened tab (i.e. console is still blocked)
 #I have to hit the <Stop> Button to get back command.
 
+#Shiny with inputs
 library(shiny)
 
 shinyUI(pageWithSidebar(
-    headerPanel("Illustrating markup"),
+    headerPanel("Illustrating inputs"),
     sidebarPanel(
-        h1("Sidebar panel tex"),
-        h1("H1 text"),
-        h2("H2 text"),
-        h3("H3 text"),
-        h4("H4 text")
-    ),
+        numericInput('id1', "Numeric input, labeled id1", 0, min=0, max=10, step=1),
+        checkboxGroupInput("id2", "Checkbox", 
+                        c("Value 1" = "1",
+                          "Value 2" = "2",
+                          "Value 3" = "3")
+                        ),
+        dateInput("date", "Date:")
+        ),
     mainPanel(
-            h3("Main Panel text"),
-            code("some code"),
-            p("some ordinary text")
+            
     )
 ))
 

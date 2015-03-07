@@ -1,3 +1,4 @@
+#Run via Console `runApp()`
 library(shiny)
 
 shinyUI(pageWithSidebar(

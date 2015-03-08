@@ -4,6 +4,10 @@
 #Doesn't end when I close the opened tab (i.e. console is still blocked)
 #I have to hit the <Stop> Button to get back command.
 
+#shinyapps.io
+# library(shinyapps)
+# shinyapps::deployApp('path/to/your/app')
+
 #Shiny with inputs
 library(shiny)
 

@@ -16,9 +16,9 @@ shinyUI(pageWithSidebar(
     ),
     
     mainPanel(
-        p("An outdoor runnder, even on relatively flat terrain, must still account for factors such as wind resistance.
-          Therefore, runners training indoors on a treadmill must simulate the conversion for outdoor performance."),
-        p("This app allows users to predict outdoor performance, based on indoor treadmill settings."),
+        p("An outdoor runner, even on relatively flat terrain, must still account for factors such as wind resistance.
+          Therefore, runners training indoors on a treadmill must convert indoor variables for outdoor performance."),
+        p("This app allows users to predict outdoor performance, based on indoor treadmill settings for speed and incline/elevation."),
         strong("Please adjust the sliders to provide input speed (MPH) and Incline (%)."),
         br(),
         br(),
@@ -28,6 +28,13 @@ shinyUI(pageWithSidebar(
         p("Our estimate of your equivalent outdoor pace (time per mile) is: "),
         textOutput('newEst.pace'),
         br(),
-        a(href="http://www.hillrunner.com/training/tmillchart.php","Based on data from: Hill Runner")
+        code("The application backend utilizes a linear model, developed utilizing data from"),
+        a(href="http://www.hillrunner.com/training/tmillchart.php","Hill Runner"),
+        code("to extraploate performance."),
+        br(),
+        code("Source Code is available at"),
+        a(href="https://github.com/thecapacity/datasciencecoursera/tree/master/DevData_Products/CourseProj", " Github.")
+        
+        
     )
 ))

@@ -24,15 +24,15 @@ The application will be:
 
 The application must include the following:
 
-* Some form of input (widget: textbox, radio button, checkbox, ...)
+* Some form of input (widget: textbox, radio button, checkbox, sider, ...)
 
-* Some operation on the ui input in sever.R
+* Some operation on the ui input in server.R
 
 * Some reactive output displayed as a result of server calculations
 
 It will include enough guidance and documentation so that a introductory user could use your application.  This guidance will be within the Shiny website itself, and not posted to an external link.
 
-The scope fo the Shiny application is entirely up for individual interpretation. We were directed to make the package simple for the end user, so that they don't need a lot of your prerequisite knowledge to evaluate the application. The final instruction was to emphasize a simple project given the short time frame.  
+The scope of the Shiny application was left entirely up for individual interpretation. We were directed to make the package simple for the end user, so that they don't need a lot of your prerequisite knowledge to evaluate the application. The final instruction was to emphasize a simple project given the short time frame.  
 
 ## Problem Definition
 

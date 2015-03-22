@@ -8,6 +8,8 @@ The live URL for the app is located at: https://thecapacity.shinyapps.io/CourseP
 
 And the Source Code is hosted at Github: https://github.com/thecapacity/datasciencecoursera/tree/master/DevData_Products/CourseProj
 
+A presentation can be found at RPubs: http://rpubs.com/thecapacity/DevData_Products_TreadmillConversion
+
 For context of the assignment, please refer to the *Guidance* section, but if you're looking for immediate background on the application and how to deploy please see the *Problem Definition* and *Application Deployment* sections for those details.
 
 #### Guidance

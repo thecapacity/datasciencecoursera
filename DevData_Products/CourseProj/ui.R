@@ -33,8 +33,7 @@ shinyUI(pageWithSidebar(
         code("to extraploate performance."),
         br(),
         code("Source Code is available at"),
-        a(href="https://github.com/thecapacity/datasciencecoursera/tree/master/DevData_Products/CourseProj", " Github.")
-        
-        
+        a(href="https://github.com/thecapacity/datasciencecoursera/tree/master/DevData_Products/CourseProj", " Github."),
+        a(href="http://rpubs.com/thecapacity/DevData_Products_TreadmillConversion", "(Presentation)")
     )
 ))

@@ -1,0 +1,127 @@
+A VIF describes the increase in the variance of a coefficient due to the correlation of its regressor with the other
+ | regressors.
+
+vif(fit)
+
+Calculates 
+| A variance inflation factor (VIF) is a ratio of estimated variances, the variance due to including the ith regressor,
+| divided by that due to including a corresponding ideal regressor which is uncorrelated with the others. VIF's can be
+| calculated directly, but the car package provides a convenient method for the purpose as we will illustrate using the
+| Swiss data from the datasets package.
+
+...
+
+
+| According to its documentation, the Swiss data set consists of a standardized fertility measure and socioeconomic
+| indicators for each of 47 French-speaking provinces of Switzerland in about 1888 when Swiss fertility rates began to
+| fall. Type head(swiss) or View(swiss) to examine the data
+
+> vif(mdl)
+Agriculture      Examination        Education         Catholic Infant.Mortality 
+2.284129         3.675420         2.774943         1.937160         1.107542 
+
+| These VIF's show, for each regression coefficient, the variance inflation due to including all the others. For
+| instance, the variance in the estimated coefficient of Education is 2.774943 times what it might have been if
+| Education were not correlated with the other regressors. Since Education and score on an Examination are likely to be
+| correlated, we might guess that most of the variance inflation for Education is due to including Examination.
+
+
+In this lesson we demonstrate the effect of omitted variables and discuss the use of ANOVA to construct
+| parsimonious, interpretable representations of the data.
+
+> fit1<-lm(Fertility~Agriculture, swiss)
+
+> fit3<-lm(Fertility~Agriculture+Examination+Education, swiss)
+
+anova(fit1, fit3)
+
+| The three asterisks, ***, at the lower right of the printed table indicate that the null hypothesis is rejected at the
+| 0.001 level, so at least one of the two additional regressors is significant. Rejection is based on a right-tailed F
+| test, Pr(>F), applied to an F value. According to the table, what is that F value?
+
+| An F statistic is a ratio of two sums of squares divided by their respective degrees of freedom. If the two scaled
+| sums are independent and centrally chi-squared distributed with the same variance, the statistic will have an F
+| distribution with parameters given by the two degrees of freedom. In our case, the two sums are residual sums of
+| squares which, as we know, have mean zero hence are centrally chi-squared provided the residuals themselves are
+| normally distributed. The two relevant sums are given in the RSS (Residual Sum of Squares) column of the table. What
+| are they?
+
+| R's function, deviance(model), calculates the residual sum of squares, also known as the deviance, of the linear model
+| given as its argument. Using deviance(fit3), verify that 3180.9 is fit3's residual sum of squares. (Of course, fit3 is
+| called Model 2 in the table.)
+
+| You are doing so well!
+
+  |====================================================================                                           |  62%
+
+| In the next several steps, we will show how to calculate the F value, 20.968, which appears in the table printed by
+| anova(). We'll begin with the denominator, which is fit3's residual sum of squares divided by its degrees of freedom.
+| Fit3 has 43 residual degrees of freedom. This figure is obtained by subtracting 4, the the number of fit3's predictors
+| (the 3 named and the intercept,) from 47, the number of samples in swiss. Store the value of deviance(fit3)/43 in a
+| variable named d.
+
+> d<-deviance(fit3)/43
+
+| Great job!
+
+  |=========================================================================                                      |  65%
+
+| The numerator is the difference, deviance(fit1)-deviance(fit3), divided by the difference in the residual degrees of
+| freedom of fit1 and fit3, namely 2. This calculation requires some theoretical justification which we omit, but the
+| essential idea is that fit3 has 2 predictors in addition to those of fit1. Calculate the numerator and store it in a
+| variable named n.
+
+> n<-deviance(fit1)-deviance(fit3)
+
+| Not quite right, but keep trying. Or, type info() for more options.
+
+| Enter n <- (deviance(fit1) - deviance(fit3))/2 at the R prompt.
+
+> n<-(deviance(fit1)-deviance(fit3))/2
+
+| Keep up the great work!
+
+  |=============================================================================                                  |  69%
+
+| Calculate the ratio, n/d, to show it is essentially equal to the F value, 20.968, given by anova().
+
+> n/d
+[1] 20.96783
+
+| You are quite good my friend!
+
+  |=================================================================================                              |  73%
+
+| We'll now calculate the p-value, which is the probability that a value of n/d or larger would be drawn from an F
+| distribution which has parameters 2 and 43. This value was given as 4.407e-07 in the column labeled Pr(>F) in the
+| table printed by anova(), a very unlikely value if the null hypothesis were true. Calculate this p-value using pf(n/d,
+| 2, 43, lower.tail=FALSE).
+
+> pf(n/d, 2, 43, lower.tail=FALSE)
+[1] 4.406913e-07
+
+| Excellent job!
+
+  |=====================================================================================                          |  77%
+
+| Based on the calculated p-value, a false rejection of the null hypothesis is extremely unlikely. We are confident that
+| fit3 is significantly better than fit1, with one caveat: analysis of variance is sensitive to its assumption that
+| model residuals are approximately normal. If they are not, we could get a small p-value for that reason. It is thus
+| worth testing residuals for normality. The Shapiro-Wilk test is quick and easy in R. Normality is its null hypothesis.
+| Use shapiro.test(fit3$residuals) to test the residual of fit3.
+
+> 
+> shapiro.test(fit3$residuals)
+
+    Shapiro-Wilk normality test
+
+data:  fit3$residuals
+W = 0.9728, p-value = 0.336
+
+| The Shapiro-Wilk p-value of 0.336 fails to reject normality, supporting confidence in our analysis of variance. In
+| order to illustrate the use of anova() with more than two models, I have constructed fit5 and fit6 using the first 5
+| and all 6 regressors (including the intercept) respectively. Thus fit1, fit3, fit5, and fit6 form a nested sequence of
+| models; the regressors of one are included in those of the next. Enter anova(fit1, fit3, fit5, fit6) at the R prompt
+| now to get the flavor.
+
+

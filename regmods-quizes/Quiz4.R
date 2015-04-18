@@ -23,6 +23,7 @@ shuttle$wind = shuttle$wind == "head"
 
 # Give Odds(Head) / Odds(Tail)
 1.285714 / 1.327273
+"0.968"
 
 ## Q2
 
@@ -35,10 +36,17 @@ exp(-coef(fit2))
 ## 1.4851533  1.4383682  1.0000000  0.6841941  0.9376181 
 
 1.4383682 / 1.4851533
+"0.969"
 
 ## Q3
 fitQ31 <- glm(use ~ wind, data=shuttle, family = binomial)
 fitQ32 <- glm(1 - use ~ wind, data=shuttle, family = binomial)
+
+summary(fitQ31)$coeff
+summary(fitQ32)$coeff
+
+# WRONG: "The intercept changes sign, but the other coefficients don't."
+"The coefficients reverse their signs"
 
 ## Q4
 
@@ -50,6 +58,7 @@ exp(coef(Q4fit))
 # 14.500000 15.333333  2.083333  4.916667  3.500000 16.666667 
 
 14.5 / 15.333
+"0.9457"
 
 ## Q5
 
@@ -69,6 +78,7 @@ Q5fit <- glm(count ~ x + offset(t), family="poisson")
 # which means our coeddicient is smaller (i.e. divided) by the log(10) effect.
 
 ## Actually that changes the _UNITS_ of the coefficient but not the # itself
+"The coefficient estimate is unchanged"
 
 ## Q6
 
@@ -99,3 +109,4 @@ xmat<-cbind(1,x,splineTerms)
 fit<-lm(y~xmat-1)
 yhat<-predict(fit)
 (yhat[10]-yhat[6])/4
+"1.013"
